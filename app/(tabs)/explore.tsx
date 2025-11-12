@@ -1,12 +1,12 @@
-import { StyleSheet } from 'react-native';
 import { ThemedText } from '@/components/common/themed-text';
 import { ThemedView } from '@/components/common/themed-view';
+import { StyleSheet } from 'react-native';
 
 export default function ExploreScreen() {
   return (
     <ThemedView style={styles.container}>
       <ThemedText type="title">Em Desenvolvimento</ThemedText>
-      <ThemedText>Esta página está em construção.</ThemedText>
+      <ThemedText>Esta pï¿½gina estï¿½ em construï¿½ï¿½o.</ThemedText>
     </ThemedView>
   );
 }

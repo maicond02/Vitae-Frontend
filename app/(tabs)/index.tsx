@@ -1,7 +1,7 @@
-import HomeContent from '@/components/screens/home-content';
 import LoginScreen from '@/components/auth/login-screen';
 import RegisterScreen from '@/components/auth/register-screen';
 import { ThemedView } from '@/components/common/themed-view';
+import HomeContent from '@/components/screens/home-content';
 import { useAuth } from '@/context/auth-context';
 import { useState } from 'react';
 

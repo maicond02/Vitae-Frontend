@@ -1,3 +1,3 @@
-import About from '@/components/about';
+import About from '@/components/screens/about';
 
 export default About;

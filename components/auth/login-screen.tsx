@@ -5,25 +5,26 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
 import {
-    Alert,
-    Dimensions,
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Alert,
+  Dimensions,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
 interface LoginScreenProps {
   onNavigateToRegister: () => void;
+  onNavigateToForgotPassword: () => void;
 }
 
-export default function LoginScreen({ onNavigateToRegister }: LoginScreenProps) {
+export default function LoginScreen({ onNavigateToRegister, onNavigateToForgotPassword }: LoginScreenProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -71,7 +72,7 @@ export default function LoginScreen({ onNavigateToRegister }: LoginScreenProps) 
                 end={{ x: 1, y: 1 }}
                 style={styles.logo}
               >
-                <Ionicons name="briefcase" size={40} color="#fff" />
+                <Ionicons name="shield-checkmark" size={40} color="#fff" />
               </LinearGradient>
             </View>
             <Text style={[styles.title, { color: colors.text }]}>Vitae</Text>
@@ -137,7 +138,7 @@ export default function LoginScreen({ onNavigateToRegister }: LoginScreenProps) 
             </View>
 
             {/* Forgot Password */}
-            <TouchableOpacity style={styles.forgotPassword}>
+            <TouchableOpacity style={styles.forgotPassword} onPress={onNavigateToForgotPassword}>
               <Text style={[styles.forgotPasswordText, { color: colors.tint }]}>
                 Esqueceu a senha?
               </Text>

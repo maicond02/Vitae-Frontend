@@ -18,15 +18,9 @@ export default function Chat() {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
   const { user } = useAuth();
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 1,
-      text: 'Olá! Como posso ajudar você hoje?',
-      sender: 'bot',
-      timestamp: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
+  const [messageCount, setMessageCount] = useState(0);
 
   const sendMessage = () => {
     if (inputText.trim()) {
@@ -38,12 +32,22 @@ export default function Chat() {
       };
       setMessages([...messages, newMessage]);
       setInputText('');
+      setMessageCount(messageCount + 1);
 
       // Simulate bot response
       setTimeout(() => {
+        let botText = '';
+        if (messageCount === 0) {
+          botText = 'Olá! Obrigado por entrar em contato com o Vitae. Estou analisando sua solicitação...';
+        } else if (messageCount === 1) {
+          botText = 'Recebi sua mensagem. Nossa equipe de suporte retornará em breve com mais informações.';
+        } else {
+          botText = 'Agradecemos sua paciência. Um atendente especializado entrará em contato o mais rápido possível.';
+        }
+        
         const botResponse: Message = {
           id: messages.length + 2,
-          text: 'Obrigado pela sua mensagem! Em breve retornaremos.',
+          text: botText,
           sender: 'bot',
           timestamp: new Date(),
         };
@@ -75,18 +79,12 @@ export default function Chat() {
             ]}
           >
             <Text
-              style={[
-                styles.messageText,
-                { color: message.sender === 'user' ? '#fff' : colors.text },
-              ]}
+              style={styles.messageText}
             >
               {message.text}
             </Text>
             <Text
-              style={[
-                styles.timestamp,
-                { color: message.sender === 'user' ? '#fff' : colors.icon },
-              ]}
+              style={styles.timestamp}
             >
               {message.timestamp.toLocaleTimeString('pt-BR', {
                 hour: '2-digit',
@@ -151,10 +149,12 @@ const styles = StyleSheet.create({
   messageText: {
     fontSize: 16,
     marginBottom: 4,
+    color: '#000',
   },
   timestamp: {
     fontSize: 12,
     opacity: 0.7,
+    color: '#000',
   },
   inputContainer: {
     flexDirection: 'row',

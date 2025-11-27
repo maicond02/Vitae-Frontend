@@ -13,6 +13,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => Promise<void>;
   register: (email: string, password: string, name: string, phone?: string) => Promise<boolean>;
+  updateUser: (updates: Partial<User>) => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -121,8 +122,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const updateUser = async (updates: Partial<User>): Promise<boolean> => {
+    try {
+      if (!user) return false;
+
+      const updatedUser = { ...user, ...updates };
+      
+      // Atualizar o usuário no storage de usuários
+      const usersData = await AsyncStorage.getItem(USERS_KEY);
+      if (usersData) {
+        const users = JSON.parse(usersData);
+        if (users[user.email]) {
+          users[user.email] = {
+            ...users[user.email],
+            name: updatedUser.name,
+            phone: updatedUser.phone,
+          };
+          await AsyncStorage.setItem(USERS_KEY, JSON.stringify(users));
+        }
+      }
+
+      // Atualizar o usuário atual
+      setUser(updatedUser);
+      await AsyncStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedUser));
+      
+      return true;
+    } catch (error) {
+      console.error('Erro ao atualizar usuário:', error);
+      return false;
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, register }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, register, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

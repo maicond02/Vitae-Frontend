@@ -7,7 +7,9 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
 import {
+    Alert,
     KeyboardAvoidingView,
+    Linking,
     Platform,
     ScrollView,
     StyleSheet,
@@ -35,6 +37,19 @@ export default function Report() {
     type: 'info' | 'success' | 'error';
     buttons: { text: string; onPress?: () => void; style?: 'default' | 'cancel' }[];
   }>({ visible: false, title: '', message: '', type: 'info', buttons: [] });
+
+  const makePhoneCall = (phoneNumber: string) => {
+    const phoneUrl = `tel:${phoneNumber}`;
+    Linking.canOpenURL(phoneUrl)
+      .then((supported) => {
+        if (supported) {
+          Linking.openURL(phoneUrl);
+        } else {
+          Alert.alert('Erro', 'Não foi possível realizar a ligação');
+        }
+      })
+      .catch((err) => console.error('Erro ao tentar ligar:', err));
+  };
 
   const formatDate = (text: string) => {
     // Remove tudo que não é número
@@ -339,11 +354,11 @@ export default function Report() {
           <View style={styles.helpSection}>
             <Text style={[styles.helpTitle, { color: colors.text }]}>Precisa de Ajuda Imediata?</Text>
             <View style={styles.helpButtons}>
-              <TouchableOpacity style={styles.helpButton}>
+              <TouchableOpacity style={styles.helpButton} onPress={() => makePhoneCall('100')}>
                 <Ionicons name="call" size={20} color="#10b981" />
                 <Text style={styles.helpButtonText}>Disque 100</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.helpButton}>
+              <TouchableOpacity style={styles.helpButton} onPress={() => makePhoneCall('190')}>
                 <Ionicons name="shield" size={20} color="#667eea" />
                 <Text style={styles.helpButtonText}>Polícia 190</Text>
               </TouchableOpacity>
@@ -395,7 +410,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     padding: 20,
-    paddingBottom: 40,
+    paddingBottom: 100,
   },
   card: {
     padding: 20,

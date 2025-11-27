@@ -21,7 +21,7 @@ export default function About() {
           style={styles.header}
         >
           <View style={styles.logoContainer}>
-            <Ionicons name="briefcase" size={60} color="#fff" />
+            <Ionicons name="shield-checkmark" size={60} color="#fff" />
           </View>
           <Text style={styles.appName}>Vitae</Text>
           <Text style={styles.version}>Versão 1.0.0</Text>
@@ -33,9 +33,9 @@ export default function About() {
               Sobre o Vitae
             </ThemedText>
             <Text style={[styles.description, { color: colors.text }]}>
-              O Vitae é uma plataforma completa para criação e gerenciamento de currículos profissionais. 
-              Com ferramentas modernas e intuitivas, ajudamos você a criar currículos impressionantes 
-              e acompanhar suas aplicações de emprego.
+              O Vitae é uma plataforma de denúncia e proteção de direitos humanos desenvolvida para a cidade de Americana, SP. 
+              Oferecemos um canal seguro e anônimo para reportar violações, com acesso rápido a serviços de emergência 
+              e suporte especializado para vítimas de violência e discriminação.
             </Text>
           </View>
 
@@ -45,37 +45,37 @@ export default function About() {
             </ThemedText>
             
             <View style={[styles.featureCard, { backgroundColor: colorScheme === 'dark' ? '#1f1f1f' : '#fff' }]}>
-              <Ionicons name="create" size={24} color="#667eea" />
+              <Ionicons name="document-text" size={24} color="#667eea" />
               <View style={styles.featureText}>
                 <Text style={[styles.featureTitle, { color: colors.text }]}>
-                  Criação de Currículos
+                  Denúncia Anônima
                 </Text>
                 <Text style={[styles.featureDescription, { color: colors.icon }]}>
-                  Templates profissionais e personalizáveis
+                  Reporte violações de forma segura e confidencial
                 </Text>
               </View>
             </View>
 
             <View style={[styles.featureCard, { backgroundColor: colorScheme === 'dark' ? '#1f1f1f' : '#fff' }]}>
-              <Ionicons name="analytics" size={24} color="#764ba2" />
+              <Ionicons name="alert-circle" size={24} color="#ef4444" />
               <View style={styles.featureText}>
                 <Text style={[styles.featureTitle, { color: colors.text }]}>
-                  Acompanhamento
+                  Botão do Pânico
                 </Text>
                 <Text style={[styles.featureDescription, { color: colors.icon }]}>
-                  Gerencie suas aplicações em um só lugar
+                  Acesso rápido a serviços de emergência
                 </Text>
               </View>
             </View>
 
             <View style={[styles.featureCard, { backgroundColor: colorScheme === 'dark' ? '#1f1f1f' : '#fff' }]}>
-              <Ionicons name="shield-checkmark" size={24} color="#10b981" />
+              <Ionicons name="chatbubbles" size={24} color="#10b981" />
               <View style={styles.featureText}>
                 <Text style={[styles.featureTitle, { color: colors.text }]}>
-                  Segurança
+                  Suporte 24/7
                 </Text>
                 <Text style={[styles.featureDescription, { color: colors.icon }]}>
-                  Seus dados protegidos com criptografia
+                  Chat com assistente virtual para orientação
                 </Text>
               </View>
             </View>
@@ -83,33 +83,46 @@ export default function About() {
 
           <View style={styles.section}>
             <ThemedText type="subtitle" style={styles.sectionTitle}>
-              Contato
+              Contato e Emergência
             </ThemedText>
 
             <TouchableOpacity 
               style={[styles.contactCard, { backgroundColor: colorScheme === 'dark' ? '#1f1f1f' : '#fff' }]}
-              onPress={() => Linking.openURL('mailto:suporte@vitae.com')}
+              onPress={() => Linking.openURL('tel:100')}
             >
-              <Ionicons name="mail" size={24} color={colors.icon} />
+              <Ionicons name="call" size={24} color="#10b981" />
               <Text style={[styles.contactText, { color: colors.text }]}>
-                suporte@vitae.com
+                Disque 100 - Direitos Humanos
               </Text>
             </TouchableOpacity>
 
             <TouchableOpacity 
               style={[styles.contactCard, { backgroundColor: colorScheme === 'dark' ? '#1f1f1f' : '#fff' }]}
-              onPress={() => Linking.openURL('https://vitae.com')}
+              onPress={() => Linking.openURL('tel:190')}
             >
-              <Ionicons name="globe" size={24} color={colors.icon} />
+              <Ionicons name="shield" size={24} color="#667eea" />
               <Text style={[styles.contactText, { color: colors.text }]}>
-                www.vitae.com
+                190 - Polícia Militar
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={[styles.contactCard, { backgroundColor: colorScheme === 'dark' ? '#1f1f1f' : '#fff' }]}
+              onPress={() => Linking.openURL('mailto:contato@vitae-americana.sp.gov.br')}
+            >
+              <Ionicons name="mail" size={24} color={colors.icon} />
+              <Text style={[styles.contactText, { color: colors.text }]}>
+                contato@vitae-americana.sp.gov.br
               </Text>
             </TouchableOpacity>
           </View>
 
           <View style={styles.footer}>
             <Text style={[styles.footerText, { color: colors.icon }]}>
-              © 2025 Vitae. Todos os direitos reservados.
+              © 2025 Vitae - Prefeitura de Americana, SP
+            </Text>
+            <Text style={[styles.footerText, { color: colors.icon }]}>
+              Proteção e Defesa dos Direitos Humanos
             </Text>
           </View>
         </View>

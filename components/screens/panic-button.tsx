@@ -1,11 +1,12 @@
-﻿import { ThemedText } from '@/components/common/themed-text';
+﻿import CustomAlert from '@/components/common/custom-alert';
+import { ThemedText } from '@/components/common/themed-text';
 import { ThemedView } from '@/components/common/themed-view';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useRef, useState } from 'react';
-import { Alert, Animated, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function PanicButton() {
   const colorScheme = useColorScheme();
@@ -13,6 +14,13 @@ export default function PanicButton() {
   const [isActive, setIsActive] = useState(false);
   const [countdown, setCountdown] = useState(0);
   const pulseAnim = useRef(new Animated.Value(1)).current;
+  const [alertConfig, setAlertConfig] = useState<{
+    visible: boolean;
+    title: string;
+    message: string;
+    type: 'info' | 'success' | 'error';
+    buttons: { text: string; onPress?: () => void; style?: 'default' | 'cancel' }[];
+  }>({ visible: false, title: '', message: '', type: 'info', buttons: [] });
 
   useEffect(() => {
     if (isActive) {
@@ -49,30 +57,34 @@ export default function PanicButton() {
   }, [isActive]);
 
   const handlePanicPress = () => {
-    Alert.alert(
-      'Ativar Botão do Pânico?',
-      'Isso enviará alertas para seus contatos de emergência e autoridades locais.',
-      [
+    setAlertConfig({
+      visible: true,
+      title: 'Ativar Botão do Pânico?',
+      message: 'Isso enviará alertas para seus contatos de emergência e autoridades locais.',
+      type: 'error',
+      buttons: [
         {
           text: 'Cancelar',
           style: 'cancel',
         },
         {
           text: 'ATIVAR',
-          style: 'destructive',
           onPress: () => {
             setIsActive(true);
+            setAlertConfig({ ...alertConfig, visible: false });
           },
         },
-      ]
-    );
+      ],
+    });
   };
 
   const handleDeactivate = () => {
-    Alert.alert(
-      'Desativar Alerta?',
-      'Tem certeza que deseja desativar o alerta de emergência?',
-      [
+    setAlertConfig({
+      visible: true,
+      title: 'Desativar Alerta?',
+      message: 'Tem certeza que deseja desativar o alerta de emergência?',
+      type: 'info',
+      buttons: [
         {
           text: 'Não',
           style: 'cancel',
@@ -82,10 +94,11 @@ export default function PanicButton() {
           onPress: () => {
             setIsActive(false);
             setCountdown(0);
+            setAlertConfig({ ...alertConfig, visible: false });
           },
         },
-      ]
-    );
+      ],
+    });
   };
 
   const handleEmergencyCall = (number: string) => {
@@ -251,6 +264,15 @@ export default function PanicButton() {
           )}
         </View>
       </ScrollView>
+
+      <CustomAlert
+        visible={alertConfig.visible}
+        title={alertConfig.title}
+        message={alertConfig.message}
+        type={alertConfig.type}
+        buttons={alertConfig.buttons}
+        onClose={() => setAlertConfig({ ...alertConfig, visible: false })}
+      />
     </ThemedView>
   );
 }
